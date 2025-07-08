@@ -103,7 +103,7 @@ struct TabBarButton: View {
                 
                 Text(label)
                     .font(.system(size: 12, weight: .bold))
-                    .foregroundColor(isActive ? .appWhite : .appWhite.opacity(0.4))
+                    .foregroundColor(isActive ? .appWhite : .appWhite.opacity(0.6))
             }
             .padding(.vertical, 8)
         }
