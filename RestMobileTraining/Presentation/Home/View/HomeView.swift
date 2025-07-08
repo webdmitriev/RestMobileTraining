@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HomeView: View {
+    @StateObject private var timer = WorkoutTimer()
+    @StateObject private var workoutManager = WorkoutManager.shared
 
     var body: some View {
         NavigationStack {
@@ -15,9 +17,42 @@ struct HomeView: View {
                 header
                     .padding(.horizontal, AppConstants.Layout.offsetPage)
                 
+                Spacer(minLength: 24)
+                
+                // Текущая тренировка
+                if timer.isActive {
+                    Text(timer.formattedCurrentTime())
+                        .font(.system(size: 48, weight: .bold, design: .monospaced))
+                        .padding()
+                }
+                
+                // График
+                BarChartView(workouts: workoutManager.getLast7DaysWorkouts())
+                    .frame(height: 250)
+                    .padding(.horizontal, AppConstants.Layout.offsetPage)
+                
+                // Кнопка старт/стоп
+                Button(action: toggleWorkout) {
+                    Text(timer.isActive ? "Стоп" : "Старт")
+                        .font(.title)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(timer.isActive ? Color.red : Color.green)
+                        .cornerRadius(10)
+                }
+                .padding(.top, 20)
+                
                 Spacer()
             }
-            .background(.appBackground)
+            .background(Color.appBackground)
+        }
+    }
+    
+    private func toggleWorkout() {
+        if timer.isActive {
+            timer.stop()
+        } else {
+            timer.start()
         }
     }
     
@@ -39,5 +74,6 @@ struct HomeView: View {
         }
         .frame(maxWidth: .infinity)
     }
+
 }
 

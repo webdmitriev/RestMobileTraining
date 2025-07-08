@@ -16,6 +16,7 @@ struct TabItem: Identifiable {
 
 struct TabBar: View {
     @EnvironmentObject var appState: AppState
+    @StateObject var workoutManager = WorkoutManager.shared
 
     @State private var selectedTabIndex: Int = 0
     
@@ -54,6 +55,7 @@ struct TabBar: View {
         case 3:
             ProfileView()
                 .environmentObject(appState)
+                .environmentObject(workoutManager)
         default:
             EmptyView()
         }
