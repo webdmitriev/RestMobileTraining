@@ -17,30 +17,29 @@ struct HomeView: View {
                 header
                     .padding(.horizontal, AppConstants.Layout.offsetPage)
                 
-                Spacer(minLength: 24)
+                Spacer(minLength: 48)
                 
                 // Текущая тренировка
-                if timer.isActive {
-                    Text(timer.formattedCurrentTime())
-                        .font(.system(size: 48, weight: .bold, design: .monospaced))
-                        .padding()
-                }
+                Text(timer.isActive ? timer.formattedCurrentTime() : "00:00")
+                    .modifier(Titles(fontSize: .size32,
+                                     color: timer.isActive ? .appTextPrimary : .appTextSecondary,
+                                     alignment: .center))
+                    .padding(.horizontal, AppConstants.Layout.offsetPage)
                 
                 // График
                 BarChartView(workouts: workoutManager.getLast7DaysWorkouts())
-                    .frame(height: 250)
                     .padding(.horizontal, AppConstants.Layout.offsetPage)
                 
                 // Кнопка старт/стоп
                 Button(action: toggleWorkout) {
                     Text(timer.isActive ? "Стоп" : "Старт")
-                        .font(.title)
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(timer.isActive ? Color.red : Color.green)
-                        .cornerRadius(10)
+                        .modifier(SubTitles(color: .appWhite, alignment: .center))
+                        .padding(.vertical, 11)
+                        .background(timer.isActive ? .appDanger : .appSuccess)
+                        .clipShape(RoundedRectangle(cornerRadius: AppConstants.Layout.cornerRadius8))
                 }
                 .padding(.top, 20)
+                .padding(.horizontal, AppConstants.Layout.offsetPage)
                 
                 Spacer()
             }

@@ -27,20 +27,18 @@ struct BarChartView: View {
                         
                         VStack(spacing: 4) {
                             Rectangle()
-                                .fill(Color.blue)
+                                .fill(.appSecondary.opacity(0.8))
                                 .frame(
                                     width: columnWidth,
-                                    height: max(columnHeight, 0)
+                                    height: max(columnHeight, 1)
                                 )
-                                .cornerRadius(4)
+                                .clipShape(RoundedRectangle(cornerRadius: AppConstants.Layout.cornerRadius8 / 2))
                             
                             Text(formatDate(workout.date))
-                                .font(.caption2)
-                                .foregroundColor(.gray)
+                                .modifier(SecondaryText(color: .appTextSecondary, alignment: .center))
                             
                             Text(formatDuration(workout.duration))
-                                .font(.caption2)
-                                .foregroundColor(.blue)
+                                .modifier(SecondaryText(color: .appSecondary, alignment: .center))
                         }
                         .frame(width: columnWidth)
                     }
