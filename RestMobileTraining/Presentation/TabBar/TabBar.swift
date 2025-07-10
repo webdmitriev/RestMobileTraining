@@ -44,7 +44,10 @@ struct TabBar: View {
     private var tabContentView: some View {
         switch selectedTabIndex {
         case 0:
-            HomeView()
+            let dataSource = RemoteWorkoutsSourceImpl()
+            let repo = FetchWorkoutsRepositoryImpl(dataSource: dataSource)
+            let useCase = FetchWorkoutsUseCaseImpl(repository: repo)
+            HomeView(viewModel: HomeViewModel(getMockDataUseCase: useCase))
                 .environmentObject(appState)
         case 1:
             HistoryView()

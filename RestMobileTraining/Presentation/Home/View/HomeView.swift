@@ -10,8 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @StateObject private var timer = WorkoutTimer()
     @StateObject private var workoutManager = WorkoutManager.shared
-    
-    let workout = Workout.mockData()
+    @StateObject var viewModel: HomeViewModel
 
     var body: some View {
         NavigationStack {
@@ -84,7 +83,7 @@ struct HomeView: View {
             Text("Last 3 workouts")
                 .modifier(Titles(fontSize: .size24, alignment: .leading))
             
-            ForEach(workout, id: \.id) { item in
+            ForEach(viewModel.mockWorkouts(), id: \.id) { item in
                 TrainingItem(item: item)
             }
         }

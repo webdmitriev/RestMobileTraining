@@ -23,34 +23,4 @@ struct Workout: Identifiable, Codable {
         self.notes = notes
         self.imageName = imageName
     }
-    
-    static func mockData() -> [Workout] {
-        [
-            Workout(
-                id: "01",
-                type: "Run",
-                duration: 45,
-                date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!, // Вчера
-                notes: "Интервальный бег 4x400м",
-                imageName: "workout-01"
-            ),
-            Workout(
-                id: "02",
-                type: "Yoga",
-                duration: 30,
-                date: Calendar.current.date(byAdding: .day, value: -3, to: Date())!, // 3 дня назад
-                notes: "Утренняя практика",
-                imageName: "workout-02"
-            ),
-            Workout(
-                id: "03",
-                type: "Swimming",
-                duration: 60,
-                date: Calendar.current.date(byAdding: .day, value: -5, to: Date())!, // 5 дней назад
-                notes: "Брасс 1.5 км",
-                imageName: "workout-03"
-            )
-        ]
-    }
-    
 }
