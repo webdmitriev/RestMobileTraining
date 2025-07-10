@@ -11,7 +11,7 @@ struct HistoryView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                Text("HistoryView")
+                Text("HistoryView!")
                 
                 Spacer()
             }
