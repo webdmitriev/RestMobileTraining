@@ -1,5 +1,5 @@
 //
-//  RemoteWorkoutsSourceImpl.swift
+//  RemoteWorkoutsDataSourceImpl.swift
 //  RestMobileTraining
 //
 //  Created by Олег Дмитриев on 10.07.2025.
@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class RemoteWorkoutsSourceImpl: FetchWorkoutsDataSource {
+class RemoteWorkoutsDataSourceImpl: FetchWorkoutsDataSource {
 
     func fetchWorkouts() -> AnyPublisher<[Workout], any Error> {
         let urlString = "www"

@@ -42,18 +42,19 @@ struct TabBar: View {
     
     @ViewBuilder
     private var tabContentView: some View {
+        let dataSource = RemoteWorkoutsDataSourceImpl()
+        let repo = FetchWorkoutsRepositoryImpl(dataSource: dataSource)
+        let useCase = FetchWorkoutsUseCaseImpl(repository: repo)
+        
         switch selectedTabIndex {
         case 0:
-            let dataSource = RemoteWorkoutsSourceImpl()
-            let repo = FetchWorkoutsRepositoryImpl(dataSource: dataSource)
-            let useCase = FetchWorkoutsUseCaseImpl(repository: repo)
             HomeView(viewModel: HomeViewModel(getMockDataUseCase: useCase))
                 .environmentObject(appState)
         case 1:
-            HistoryView()
+            TimerWorkoutsView(viewModel: TimerWorkoutsViewModel(getMockDataUseCase: useCase))
                 .environmentObject(appState)
         case 2:
-            TimerView()
+            HistoryView()
                 .environmentObject(appState)
         case 3:
             ProfileView()

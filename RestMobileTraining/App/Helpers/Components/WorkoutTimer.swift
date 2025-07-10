@@ -9,24 +9,24 @@ import Foundation
 import SwiftUI
 import Combine
 
-class WorkoutTimer: ObservableObject {
+final class WorkoutTimer: ObservableObject {
+    static let shared = WorkoutTimer()
+
     @Published var isActive = false
     @Published var currentSessionDuration: TimeInterval = 0
+    @Published var selectedWorkout: WorkoutType? = nil
+
     private var startTime: Date?
-    private var totalDurationToday: TimeInterval = 0
     private var timerCancellable: AnyCancellable?
+    
+    private init() {}
     
     func start() {
         guard !isActive else { return }
         
-        // Загружаем сегодняшнюю тренировку
-        let today = Calendar.current.startOfDay(for: Date())
-        if let todayWorkout = WorkoutManager.shared.workouts.first(where: { Calendar.current.isDate($0.date, inSameDayAs: today) }) {
-            totalDurationToday = todayWorkout.duration
-        }
-        
         isActive = true
         startTime = Date()
+        currentSessionDuration = 0
         
         timerCancellable = Timer.publish(every: 1, on: .main, in: .common)
             .autoconnect()
@@ -39,17 +39,17 @@ class WorkoutTimer: ObservableObject {
         isActive = false
         timerCancellable?.cancel()
         saveWorkout()
+        selectedWorkout = nil
+        currentSessionDuration = 0
     }
     
     private func updateTimer() {
         guard let startTime = startTime else { return }
-        currentSessionDuration = Date().timeIntervalSince(startTime) / 60 // в минутах
+        currentSessionDuration = Date().timeIntervalSince(startTime) / 60
     }
     
     private func saveWorkout() {
-        let totalDuration = totalDurationToday + currentSessionDuration
-        WorkoutManager.shared.updateTodayWorkout(duration: totalDuration)
-        currentSessionDuration = 0
+        WorkoutManager.shared.addToToday(duration: currentSessionDuration)
     }
     
     func formattedCurrentTime() -> String {

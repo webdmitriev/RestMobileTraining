@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject private var timer = WorkoutTimer()
+    @StateObject private var timer = WorkoutTimer.shared
     @StateObject private var workoutManager = WorkoutManager.shared
+
     @StateObject var viewModel: HomeViewModel
 
     var body: some View {
@@ -22,7 +23,7 @@ struct HomeView: View {
                 
                 chart
                 
-                Spacer(minLength: 48)
+                Spacer(minLength: 36)
                 
                 lastThreeTraining
                 

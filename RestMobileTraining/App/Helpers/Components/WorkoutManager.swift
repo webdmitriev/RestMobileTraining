@@ -63,6 +63,18 @@ class WorkoutManager: ObservableObject {
         return last7Days.reversed()
     }
     
+    func addToToday(duration: TimeInterval) {
+        let today = Calendar.current.startOfDay(for: Date())
+        
+        if let index = workouts.firstIndex(where: { Calendar.current.isDate($0.date, inSameDayAs: today) }) {
+            workouts[index].duration += duration
+        } else {
+            workouts.append(WorkoutData(date: today, duration: duration))
+        }
+        
+        saveWorkouts()
+    }
+    
     func resetAllData() {
         workouts = []
         saveWorkouts()
