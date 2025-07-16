@@ -13,8 +13,7 @@ struct RestMobileTrainingApp: App {
 
     var body: some Scene {
         WindowGroup {
-            TabBar()
-                .environmentObject(appState)
+            OnboardingView()
         }
     }
 }
